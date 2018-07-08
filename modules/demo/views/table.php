@@ -2,10 +2,10 @@
 /**
  * @filesource modules/demo/views/table.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Table;
@@ -24,6 +24,33 @@ use Kotchasan\Http\Request;
 class View extends \Gcms\View
 {
     /**
+     * จัดรูปแบบการแสดงผลในแต่ละแถว.
+     *
+     * @param array  $item ข้อมูลแถว
+     * @param int    $o    ID ของข้อมูล
+     * @param object $prop กำหนด properties ของ TR
+     *
+     * @return array คืนค่า $item กลับไป
+     */
+    public function onRow($item, $o, $prop)
+    {
+        $item['create_date'] = Date::format($item['create_date'], 'd M Y');
+        if ($item['active'] == 1) {
+            $item['active'] = '<a id=access_'.$item['id'].' class="icon-valid access" title="{LNG_Can login}"></a>';
+            $item['lastvisited'] = empty($item['lastvisited']) ? '-' : Date::format($item['lastvisited'], 'd M Y H:i').' ('.number_format($item['visited']).')';
+        } else {
+            $item['active'] = '<a id=access_'.$item['id'].' class="icon-valid disabled" title="{LNG_Unable to login}"></a>';
+            $item['lastvisited'] = '-';
+        }
+        $item['fb'] = $item['fb'] == 1 ? '<span class="icon-facebook notext"></span>' : '';
+        $item['status'] = isset(self::$cfg->member_status[$item['status']]) ? '<span class=status'.$item['status'].'>{LNG_'.self::$cfg->member_status[$item['status']].'}</span>' : '';
+        $item['phone'] = self::showPhone($item['phone']);
+        $item['name'] = preg_replace('/[^\s]/', 'x', $item['name']);
+
+        return $item;
+    }
+
+    /**
      * แสดงตาราง.
      *
      * @param Request $request
@@ -35,10 +62,10 @@ class View extends \Gcms\View
         // สถานะสมาชิก
         $member_status = array(-1 => '{LNG_all items}');
         foreach (self::$cfg->member_status as $key => $value) {
-            $member_status[$key] = '{LNG_' . $value . '}';
+            $member_status[$key] = '{LNG_'.$value.'}';
         }
         // URL สำหรับส่งให้ตาราง
-        $uri = $request->createUriWithGlobals(WEB_URL . 'index.php');
+        $uri = $request->createUriWithGlobals(WEB_URL.'index.php');
         // ตาราง
         $table = new DataTable(array(
             /* Uri */
@@ -153,33 +180,7 @@ class View extends \Gcms\View
         setcookie('table_perPage', $table->perPage, time() + 3600 * 24 * 365, '/');
         setcookie('table_sort', $table->sort, time() + 3600 * 24 * 365, '/');
         // คืนค่า HTML
+
         return $table->render();
-    }
-
-    /**
-     * จัดรูปแบบการแสดงผลในแต่ละแถว.
-     *
-     * @param array  $item ข้อมูลแถว
-     * @param int    $o    ID ของข้อมูล
-     * @param object $prop กำหนด properties ของ TR
-     *
-     * @return array คืนค่า $item กลับไป
-     */
-    public function onRow($item, $o, $prop)
-    {
-        $item['create_date'] = Date::format($item['create_date'], 'd M Y');
-        if ($item['active'] == 1) {
-            $item['active'] = '<a id=access_' . $item['id'] . ' class="icon-valid access" title="{LNG_Can login}"></a>';
-            $item['lastvisited'] = empty($item['lastvisited']) ? '-' : Date::format($item['lastvisited'], 'd M Y H:i') . ' (' . number_format($item['visited']) . ')';
-        } else {
-            $item['active'] = '<a id=access_' . $item['id'] . ' class="icon-valid disabled" title="{LNG_Unable to login}"></a>';
-            $item['lastvisited'] = '-';
-        }
-        $item['fb'] = $item['fb'] == 1 ? '<span class="icon-facebook notext"></span>' : '';
-        $item['status'] = isset(self::$cfg->member_status[$item['status']]) ? '<span class=status' . $item['status'] . '>{LNG_' . self::$cfg->member_status[$item['status']] . '}</span>' : '';
-        $item['phone'] = self::showPhone($item['phone']);
-        $item['name'] = preg_replace('/[^\s]/', 'x', $item['name']);
-
-        return $item;
     }
 }

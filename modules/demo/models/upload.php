@@ -2,10 +2,10 @@
 /**
  * @filesource modules/demo/models/upload.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Upload;
@@ -45,7 +45,7 @@ class Model extends \Kotchasan\Model
                     // ตรวจสอบนามสกุลของไฟล์
                     if (!$file->validFileExt(($input == 'image_upload' ? array('jpg', 'jpeg', 'gif', 'png') : array('pdf')))) {
                         // ชนิดของไฟล์ไม่ถูกต้อง
-                        $ret['ret_' . $input] = Language::get('The type of file is invalid');
+                        $ret['ret_'.$input] = Language::get('The type of file is invalid');
                     } else {
                         try {
                             // อัปโหลดไฟล์ไปยังปลายทาง
@@ -60,12 +60,12 @@ class Model extends \Kotchasan\Model
                             );
                         } catch (\Exception $exc) {
                             // ข้อผิดพลาดการอัปโหลด
-                            $ret['ret_' . $input] = Language::get($exc->getMessage());
+                            $ret['ret_'.$input] = Language::get($exc->getMessage());
                         }
                     }
                 } elseif ($file->hasError()) {
                     // ข้อผิดพลาดการอัปโหลด
-                    $ret['ret_' . $input] = Language::get($file->getErrorMessage());
+                    $ret['ret_'.$input] = Language::get($file->getErrorMessage());
                 }
             }
             if (empty($ret)) {

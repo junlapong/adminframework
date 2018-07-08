@@ -2,10 +2,10 @@
 /**
  * @filesource modules/demo/models/table.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Table;
@@ -23,20 +23,6 @@ use Kotchasan\Language;
  */
 class Model extends \Kotchasan\Model
 {
-    /**
-     * อ่านข้อมูลสำหรับใส่ลงในตาราง.
-     *
-     * @return array
-     */
-    public static function toDataTable()
-    {
-        $model = new static();
-
-        return $model->db()->createQuery()
-            ->select('id', 'name', 'active', 'fb', 'phone', 'status', 'create_date', 'lastvisited', 'visited', 'website')
-            ->from('user');
-    }
-
     /**
      * รับค่าจากตาราง (table.php).
      *
@@ -60,5 +46,19 @@ class Model extends \Kotchasan\Model
             // คืนค่า JSON
             echo json_encode($ret);
         }
+    }
+
+    /**
+     * อ่านข้อมูลสำหรับใส่ลงในตาราง.
+     *
+     * @return array
+     */
+    public static function toDataTable()
+    {
+        $model = new static();
+
+        return $model->db()->createQuery()
+            ->select('id', 'name', 'active', 'fb', 'phone', 'status', 'create_date', 'lastvisited', 'visited', 'website')
+            ->from('user');
     }
 }

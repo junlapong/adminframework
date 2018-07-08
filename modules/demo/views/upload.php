@@ -2,10 +2,10 @@
 /**
  * @filesource modules/demo/views/upload.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Upload;
@@ -51,7 +51,7 @@ class View extends \Gcms\View
             'label' => '{LNG_Image}',
             'comment' => Language::replace('Upload :type files no larger than :size', array(':type' => 'jpg, png, gif', ':size' => UploadedFile::getUploadSize())),
             'dataPreview' => 'imgPicture',
-            'previewSrc' => WEB_URL . 'skin/img/noicon.jpg',
+            'previewSrc' => WEB_URL.'skin/img/noicon.jpg',
             'accept' => array('jpg', 'jpeg', 'gif', 'png'),
         ));
         $fieldset = $form->add('fieldset', array(

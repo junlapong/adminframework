@@ -2,10 +2,10 @@
 /**
  * @filesource modules/demo/controllers/upload.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Upload;
@@ -49,7 +49,7 @@ class Controller extends \Gcms\Controller
             $ul = $breadcrumbs->add('ul');
             $ul->appendChild('<li><span class="icon-home">{LNG_Home}</span></li>');
             $section->add('header', array(
-                'innerHTML' => '<h2 class="icon-upload">' . $this->title . '</h2>',
+                'innerHTML' => '<h2 class="icon-upload">'.$this->title.'</h2>',
             ));
             // แสดงตาราง
             $section->appendChild(createClass('Demo\Upload\View')->render($request));
@@ -57,6 +57,7 @@ class Controller extends \Gcms\Controller
             return $section->render();
         }
         // 404.html
+
         return \Index\Error\Controller::page404();
     }
 }

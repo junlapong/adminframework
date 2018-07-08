@@ -1,18 +1,20 @@
 <?php
 /**
  * @filesource modules/demo/views/preview.php
- * @link http://www.kotchasan.com/
+ *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Preview;
 
-use \Kotchasan\Html;
-use \Kotchasan\Http\Request;
+use Kotchasan\Html;
+use Kotchasan\Http\Request;
 
 /**
- * module=editprofile
+ * module=editprofile.
  *
  * @author Goragod Wiriya <admin@goragod.com>
  *
@@ -20,7 +22,6 @@ use \Kotchasan\Http\Request;
  */
 class View extends \Gcms\View
 {
-
     /**
      * ตัวอย่างฟอร์ม
      *
@@ -62,6 +63,7 @@ class View extends \Gcms\View
             'id' => 'register_id',
             'value' => $request->post('id')->toInt(),
         ));
+
         return $form->render();
     }
 }

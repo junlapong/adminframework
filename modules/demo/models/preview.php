@@ -1,17 +1,19 @@
 <?php
 /**
  * @filesource modules/demo/models/preview.php
- * @link http://www.kotchasan.com/
+ *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Preview;
 
-use \Gcms\Login;
-use \Kotchasan\Http\Request;
-use \Kotchasan\Language;
-use \Kotchasan\Validator;
+use Gcms\Login;
+use Kotchasan\Http\Request;
+use Kotchasan\Language;
+use Kotchasan\Validator;
 
 /**
  * ตารางสมาชิก
@@ -22,9 +24,8 @@ use \Kotchasan\Validator;
  */
 class Model extends \Kotchasan\Model
 {
-
     /**
-     * รับค่าจากฟอร์ม (form.php)
+     * รับค่าจากฟอร์ม (form.php).
      *
      * @param Request $request
      */

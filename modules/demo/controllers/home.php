@@ -1,18 +1,20 @@
 <?php
 /**
  * @filesource modules/demo/controllers/home.php
- * @link http://www.kotchasan.com/
+ *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Home;
 
-use \Index\Home\Controller as Home;
-use \Kotchasan\Http\Request;
+use Index\Home\Controller as Home;
+use Kotchasan\Http\Request;
 
 /**
- * Controller สำหรับการแสดงผลหน้า Home
+ * Controller สำหรับการแสดงผลหน้า Home.
  *
  * @author Goragod Wiriya <admin@goragod.com>
  *
@@ -20,13 +22,12 @@ use \Kotchasan\Http\Request;
  */
 class Controller extends \Kotchasan\KBase
 {
-
     /**
-     * ฟังก์ชั่นสร้าง card
+     * ฟังก์ชั่นสร้าง card.
      *
-     * @param Request $request
+     * @param Request               $request
      * @param \Kotchasan\Collection $card
-     * @param array $login
+     * @param array                 $login
      */
     public static function addCard(Request $request, $card, $login)
     {
@@ -36,11 +37,11 @@ class Controller extends \Kotchasan\KBase
     }
 
     /**
-     * ฟังก์ชั่นสร้าง เมนูด่วน
+     * ฟังก์ชั่นสร้าง เมนูด่วน.
      *
-     * @param Request $request
+     * @param Request               $request
      * @param \Kotchasan\Collection $card
-     * @param array $login
+     * @param array                 $login
      */
     public static function addMenu(Request $request, $menu, $login)
     {

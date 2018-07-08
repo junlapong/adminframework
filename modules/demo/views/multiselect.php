@@ -1,18 +1,20 @@
 <?php
 /**
  * @filesource modules/demo/views/multiselect.php
- * @link http://www.kotchasan.com/
+ *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Multiselect;
 
-use \Kotchasan\Html;
-use \Kotchasan\Http\Request;
+use Kotchasan\Html;
+use Kotchasan\Http\Request;
 
 /**
- * module=demo&page=multiselect
+ * module=demo&page=multiselect.
  *
  * @author Goragod Wiriya <admin@goragod.com>
  *
@@ -20,7 +22,6 @@ use \Kotchasan\Http\Request;
  */
 class View extends \Gcms\View
 {
-
     /**
      * ตัวอย่างฟอร์ม
      *
@@ -92,6 +93,7 @@ class View extends \Gcms\View
         ));
         /* Javascript สำหรับ Multi Select */
         $form->script('initProvince();');
+
         return $form->render();
     }
 }

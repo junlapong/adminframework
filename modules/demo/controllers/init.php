@@ -2,10 +2,10 @@
 /**
  * @filesource modules/demo/controllers/init.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Init;
@@ -71,7 +71,7 @@ class Controller extends \Kotchasan\KBase
             ),
             array(
                 'text' => 'Icons',
-                'url' => WEB_URL . 'skin/index.html',
+                'url' => WEB_URL.'skin/index.html',
                 'target' => '_blank',
             ),
         );

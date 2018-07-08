@@ -1,16 +1,18 @@
 <?php
 /**
  * @filesource modules/demo/models/form.php
- * @link http://www.kotchasan.com/
+ *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Form;
 
-use \Gcms\Login;
-use \Kotchasan\Http\Request;
-use \Kotchasan\Language;
+use Gcms\Login;
+use Kotchasan\Http\Request;
+use Kotchasan\Language;
 
 /**
  * รับค่าจากฟอร์ม
@@ -21,9 +23,8 @@ use \Kotchasan\Language;
  */
 class Model extends \Kotchasan\Model
 {
-
     /**
-     * รับค่าจากฟอร์ม (form.php)
+     * รับค่าจากฟอร์ม (form.php).
      *
      * @param Request $request
      */

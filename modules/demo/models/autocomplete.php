@@ -2,10 +2,10 @@
 /**
  * @filesource modules/demo/models/autocomplete.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Autocomplete;
@@ -24,27 +24,6 @@ use Kotchasan\Language;
 class Model extends \Kotchasan\Model
 {
     /**
-     * คืนค่า ตำบล อำเภอ จังหวัด จาก ตำบล.
-     *
-     * @param Request $request
-     *
-     * @return JSON
-     */
-    public function district(Request $request)
-    {
-        // session, referer
-        if ($request->initSession() && $request->isReferer()) {
-            // ข้อความค้นหาที่ส่งมา
-            $value = $request->post('search_districtID')->topic();
-            if ($value != '') {
-                $this->execute(array(
-                    array('D.district', 'LIKE', $value . '%'),
-                ));
-            }
-        }
-    }
-
-    /**
      * คืนค่า ตำบล อำเภอ จังหวัด จาก อำเภอ.
      *
      * @param Request $request
@@ -59,28 +38,28 @@ class Model extends \Kotchasan\Model
             $value = $request->post('search_amphurID')->topic();
             if ($value != '') {
                 $this->execute(array(
-                    array('A.amphur', 'LIKE', $value . '%'),
+                    array('A.amphur', 'LIKE', $value.'%'),
                 ));
             }
         }
     }
 
     /**
-     * คืนค่า ตำบล อำเภอ จังหวัด จาก จังหวัด.
+     * คืนค่า ตำบล อำเภอ จังหวัด จาก ตำบล.
      *
      * @param Request $request
      *
      * @return JSON
      */
-    public function province(Request $request)
+    public function district(Request $request)
     {
         // session, referer
         if ($request->initSession() && $request->isReferer()) {
             // ข้อความค้นหาที่ส่งมา
-            $value = $request->post('search_provinceID')->topic();
+            $value = $request->post('search_districtID')->topic();
             if ($value != '') {
                 $this->execute(array(
-                    array('P.province', 'LIKE', $value . '%'),
+                    array('D.district', 'LIKE', $value.'%'),
                 ));
             }
         }
@@ -109,6 +88,27 @@ class Model extends \Kotchasan\Model
         // คืนค่า JSON
         if (!empty($result)) {
             echo json_encode($result);
+        }
+    }
+
+    /**
+     * คืนค่า ตำบล อำเภอ จังหวัด จาก จังหวัด.
+     *
+     * @param Request $request
+     *
+     * @return JSON
+     */
+    public function province(Request $request)
+    {
+        // session, referer
+        if ($request->initSession() && $request->isReferer()) {
+            // ข้อความค้นหาที่ส่งมา
+            $value = $request->post('search_provinceID')->topic();
+            if ($value != '') {
+                $this->execute(array(
+                    array('P.province', 'LIKE', $value.'%'),
+                ));
+            }
         }
     }
 

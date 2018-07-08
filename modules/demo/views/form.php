@@ -1,18 +1,20 @@
 <?php
 /**
  * @filesource modules/demo/views/form.php
- * @link http://www.kotchasan.com/
+ *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Demo\Form;
 
-use \Kotchasan\Html;
-use \Kotchasan\Http\Request;
+use Kotchasan\Html;
+use Kotchasan\Http\Request;
 
 /**
- * module=demo&page=form
+ * module=demo&page=form.
  *
  * @author Goragod Wiriya <admin@goragod.com>
  *
@@ -20,7 +22,6 @@ use \Kotchasan\Http\Request;
  */
 class View extends \Gcms\View
 {
-
     /**
      * ตัวอย่างฟอร์ม
      *
@@ -277,6 +278,7 @@ class View extends \Gcms\View
             'value' => $request->request('id')->toInt(),
         ));
         $form->script('initDemoForm();');
+
         return $form->render();
     }
 }
