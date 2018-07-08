@@ -2,10 +2,10 @@
 /**
  * @filesource modules/index/models/member.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Index\Member;
@@ -23,34 +23,6 @@ use Kotchasan\Language;
  */
 class Model extends \Kotchasan\Model
 {
-    /**
-     * อ่านข้อมูลสำหรับใส่ลงในตาราง.
-     *
-     * @return \Kotchasan\Database\QueryBuilder
-     */
-    public static function toDataTable()
-    {
-        return static::createQuery()
-            ->select('id', 'username', 'name', 'active', 'fb', 'phone', 'status', 'create_date', 'lastvisited', 'visited', 'website')
-            ->from('user');
-    }
-
-    /**
-     * ฟังก์ชั่นอ่านจำนวนสมาชิกทั้งหมด.
-     *
-     * @return int
-     */
-    public static function getCount()
-    {
-        $query = static::createQuery()
-            ->selectCount()
-            ->from('user')
-            ->toArray()
-            ->execute();
-
-        return $query[0]['count'];
-    }
-
     /**
      * ตารางสมาชิก (member.php).
      *
@@ -124,5 +96,33 @@ class Model extends \Kotchasan\Model
         }
         // คืนค่า JSON
         echo json_encode($ret);
+    }
+
+    /**
+     * ฟังก์ชั่นอ่านจำนวนสมาชิกทั้งหมด.
+     *
+     * @return int
+     */
+    public static function getCount()
+    {
+        $query = static::createQuery()
+            ->selectCount()
+            ->from('user')
+            ->toArray()
+            ->execute();
+
+        return $query[0]['count'];
+    }
+
+    /**
+     * อ่านข้อมูลสำหรับใส่ลงในตาราง.
+     *
+     * @return \Kotchasan\Database\QueryBuilder
+     */
+    public static function toDataTable()
+    {
+        return static::createQuery()
+            ->select('id', 'username', 'name', 'active', 'fb', 'phone', 'status', 'create_date', 'lastvisited', 'visited', 'website')
+            ->from('user');
     }
 }

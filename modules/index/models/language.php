@@ -2,10 +2,10 @@
 /**
  * @filesource modules/index/models/language.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Index\Language;
@@ -70,50 +70,11 @@ class Model extends \Kotchasan\Orm\Field
     }
 
     /**
-     * อัปเดทไฟล์ ภาษา.
-     */
-    public static function updateLanguageFile()
-    {
-        // ภาษาที่ติดตั้ง
-        $languages = Language::installedLanguage();
-        // query ข้อมูลภาษา
-        $model = new \Kotchasan\Model();
-        $query = $model->db()->createQuery()->select()->from('language')->order('key');
-        // เตรียมข้อมูล
-        $datas = array();
-        foreach ($query->toArray()->execute() as $item) {
-            $save = array('key' => $item['key']);
-            foreach ($languages as $lng) {
-                if (isset($item[$lng]) && $item[$lng] != '') {
-                    if ($item['type'] == 'array') {
-                        $data = @unserialize($item[$lng]);
-                        if (is_array($data)) {
-                            $save[$lng] = $data;
-                        }
-                    } elseif ($item['type'] == 'int') {
-                        $save[$lng] = (int) $item[$lng];
-                    } else {
-                        $save[$lng] = $item[$lng];
-                    }
-                }
-            }
-            $datas[$item['js'] == 1 ? 'js' : 'php'][] = $save;
-        }
-        // บันทึกไฟล์ภาษา
-        $error = '';
-        foreach ($datas as $type => $items) {
-            $error .= Language::save($items, $type);
-        }
-
-        return $error;
-    }
-
-    /**
      * นำเข้าข้อมูลไฟล์ภาษา.
      */
     public static function import()
     {
-        $dir = ROOT_PATH . 'language/';
+        $dir = ROOT_PATH.'language/';
         if (is_dir($dir)) {
             // Model
             $model = new \Kotchasan\Model();
@@ -128,13 +89,50 @@ class Model extends \Kotchasan\Orm\Field
                         $model->db()->query("ALTER TABLE `$language_table` ADD `$match[1]` TEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci AFTER `key`");
                     }
                     if ($match[2] == 'php') {
-                        self::importPHP($model->db(), $language_table, $match[1], $dir . $text);
+                        self::importPHP($model->db(), $language_table, $match[1], $dir.$text);
                     } else {
-                        self::importJS($model->db(), $language_table, $match[1], $dir . $text);
+                        self::importJS($model->db(), $language_table, $match[1], $dir.$text);
                     }
                 }
             }
             closedir($f);
+        }
+    }
+
+    /**
+     * นำเข้าข้อมูลไฟล์ภาษา Javascript.
+     *
+     * @param Database $db             Database Object
+     * @param string   $language_table ชื่อตาราง language
+     * @param string   $lang           ชื่อภาษา
+     * @param string   $file_name      ไฟล์ภาษา
+     */
+    public static function importJS($db, $language_table, $lang, $file_name)
+    {
+        $patt = '/^var[\s]+([A-Z0-9_]+)[\s]{0,}=[\s]{0,}[\'"](.*)[\'"];$/';
+        foreach (file($file_name) as $item) {
+            $item = trim($item);
+            if ($item != '') {
+                if (preg_match($patt, $item, $match)) {
+                    $search = $db->first($language_table, array(
+                        array('key', $match[1]),
+                        array('js', 1),
+                    ));
+                    if ($search) {
+                        $db->update($language_table, $search->id, array(
+                            $lang => $match[2],
+                        ));
+                    } else {
+                        $db->insert($language_table, array(
+                            'key' => $match[1],
+                            'js' => 1,
+                            'type' => 'text',
+                            'owner' => 'index',
+                            $lang => $match[2],
+                        ));
+                    }
+                }
+            }
         }
     }
 
@@ -180,39 +178,41 @@ class Model extends \Kotchasan\Orm\Field
     }
 
     /**
-     * นำเข้าข้อมูลไฟล์ภาษา Javascript.
-     *
-     * @param Database $db             Database Object
-     * @param string   $language_table ชื่อตาราง language
-     * @param string   $lang           ชื่อภาษา
-     * @param string   $file_name      ไฟล์ภาษา
+     * อัปเดทไฟล์ ภาษา.
      */
-    public static function importJS($db, $language_table, $lang, $file_name)
+    public static function updateLanguageFile()
     {
-        $patt = '/^var[\s]+([A-Z0-9_]+)[\s]{0,}=[\s]{0,}[\'"](.*)[\'"];$/';
-        foreach (file($file_name) as $item) {
-            $item = trim($item);
-            if ($item != '') {
-                if (preg_match($patt, $item, $match)) {
-                    $search = $db->first($language_table, array(
-                        array('key', $match[1]),
-                        array('js', 1),
-                    ));
-                    if ($search) {
-                        $db->update($language_table, $search->id, array(
-                            $lang => $match[2],
-                        ));
+        // ภาษาที่ติดตั้ง
+        $languages = Language::installedLanguage();
+        // query ข้อมูลภาษา
+        $model = new \Kotchasan\Model();
+        $query = $model->db()->createQuery()->select()->from('language')->order('key');
+        // เตรียมข้อมูล
+        $datas = array();
+        foreach ($query->toArray()->execute() as $item) {
+            $save = array('key' => $item['key']);
+            foreach ($languages as $lng) {
+                if (isset($item[$lng]) && $item[$lng] != '') {
+                    if ($item['type'] == 'array') {
+                        $data = @unserialize($item[$lng]);
+                        if (is_array($data)) {
+                            $save[$lng] = $data;
+                        }
+                    } elseif ($item['type'] == 'int') {
+                        $save[$lng] = (int) $item[$lng];
                     } else {
-                        $db->insert($language_table, array(
-                            'key' => $match[1],
-                            'js' => 1,
-                            'type' => 'text',
-                            'owner' => 'index',
-                            $lang => $match[2],
-                        ));
+                        $save[$lng] = $item[$lng];
                     }
                 }
             }
+            $datas[$item['js'] == 1 ? 'js' : 'php'][] = $save;
         }
+        // บันทึกไฟล์ภาษา
+        $error = '';
+        foreach ($datas as $type => $items) {
+            $error .= Language::save($items, $type);
+        }
+
+        return $error;
     }
 }

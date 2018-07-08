@@ -2,10 +2,10 @@
 /**
  * @filesource modules/index/models/languageedit.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Index\Languageedit;
@@ -24,6 +24,20 @@ use Kotchasan\Language;
 class Model extends \Kotchasan\Model
 {
     /**
+     * ยอมรับ tag บางตัว ในภาษา a em b strong ul ol li dd dt dl.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public function allowTags($string)
+    {
+        return preg_replace_callback('/(&lt;(\/?(a|em|b|strong|ul|ol|li|dd|dt|dl|small)).*?&gt;)/is', function ($matches) {
+            return html_entity_decode($matches[1]);
+        }, $string);
+    }
+
+    /**
      * อ่านรายการ owner จากฐานข้อมูลภาษา.
      *
      * @return array
@@ -41,20 +55,6 @@ class Model extends \Kotchasan\Model
         }
 
         return $result;
-    }
-
-    /**
-     * ยอมรับ tag บางตัว ในภาษา a em b strong ul ol li dd dt dl.
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    public function allowTags($string)
-    {
-        return preg_replace_callback('/(&lt;(\/?(a|em|b|strong|ul|ol|li|dd|dt|dl|small)).*?&gt;)/is', function ($matches) {
-            return html_entity_decode($matches[1]);
-        }, $string);
     }
 
     /**
@@ -136,12 +136,12 @@ class Model extends \Kotchasan\Model
                                 // ใหม่
                                 $id = $model->db()->insert($table_language, $save);
                                 // redirect
-                                $ret['location'] = $request->getUri()->postBack('index.php', array('module' => 'language', 'js' => $save['js'], 'sort' => 'id DESC')) . '#datatable_' . $id;
+                                $ret['location'] = $request->getUri()->postBack('index.php', array('module' => 'language', 'js' => $save['js'], 'sort' => 'id DESC')).'#datatable_'.$id;
                             } else {
                                 // แก้ไข
                                 $model->db()->update($table_language, $id, $save);
                                 // redirect
-                                $ret['location'] = $request->getUri()->postBack('index.php', array('module' => 'language', 'js' => $save['js'])) . '#datatable_' . $id;
+                                $ret['location'] = $request->getUri()->postBack('index.php', array('module' => 'language', 'js' => $save['js'])).'#datatable_'.$id;
                             }
                             // อัปเดทไฟล์ ภาษา
                             $error = \Index\Language\Model::updateLanguageFile();

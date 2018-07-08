@@ -2,10 +2,10 @@
 /**
  * @filesource modules/index/controllers/page.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Index\Page;
@@ -34,7 +34,7 @@ class Controller extends \Gcms\Controller
     {
         // หน้าที่เลือก
         if (preg_match('/^([a-z0-9]+)$/i', $request->request('page')->toString(), $match)) {
-            if (file_exists(ROOT_PATH . 'modules/index/views/' . $match[1] . '.html')) {
+            if (file_exists(ROOT_PATH.'modules/index/views/'.$match[1].'.html')) {
                 // ข้อความ title bar
                 $this->title = Language::get(ucwords($match[1]));
                 // เลือกเมนู
@@ -49,16 +49,17 @@ class Controller extends \Gcms\Controller
                 ));
                 $ul = $breadcrumbs->add('ul');
                 $ul->appendChild('<li><span class="icon-home">{LNG_Home}</span></li>');
-                $ul->appendChild('<li><span>' . $this->title . '</span></li>');
+                $ul->appendChild('<li><span>'.$this->title.'</span></li>');
                 $section->add('header', array(
-                    'innerHTML' => '<h2 class="icon-index">' . $this->title . '</h2>',
+                    'innerHTML' => '<h2 class="icon-index">'.$this->title.'</h2>',
                 ));
-                $section->appendChild(file_get_contents(ROOT_PATH . 'modules/index/views/' . $match[1] . '.html'));
+                $section->appendChild(file_get_contents(ROOT_PATH.'modules/index/views/'.$match[1].'.html'));
 
                 return $section->render();
             }
         }
         // 404.html
+
         return \Index\Error\Controller::page404();
     }
 }

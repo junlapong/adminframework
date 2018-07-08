@@ -2,10 +2,10 @@
 /**
  * @filesource modules/index/controllers/error.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Index\Error;
@@ -22,17 +22,6 @@ use Kotchasan\Template;
 class Controller extends \Gcms\Controller
 {
     /**
-     * แสดงหน้า 404.html.
-     *
-     * @return string
-     */
-    public function render()
-    {
-        // คืนค่า 404.html
-        return Template::create('', '', '404')->render();
-    }
-
-    /**
      * แสดงหน้า 404.html (static).
      *
      * @return string
@@ -42,5 +31,16 @@ class Controller extends \Gcms\Controller
         $obj = new static();
 
         return $obj->render();
+    }
+
+    /**
+     * แสดงหน้า 404.html.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        // คืนค่า 404.html
+        return Template::create('', '', '404')->render();
     }
 }

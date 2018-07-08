@@ -2,10 +2,10 @@
 /**
  * @filesource modules/index/views/languageedit.php
  *
- * @see http://www.kotchasan.com/
- *
  * @copyright 2016 Goragod.com
  * @license http://www.kotchasan.com/license/
+ *
+ * @see http://www.kotchasan.com/
  */
 
 namespace Index\Languageedit;
@@ -26,6 +26,33 @@ use Kotchasan\Language;
 class View extends \Gcms\View
 {
     /**
+     * จัดรูปแบบการแสดงผลในแต่ละแถว.
+     *
+     * @param array  $item ข้อมูลแถว
+     * @param int    $o    ID ของข้อมูล
+     * @param object $prop กำหนด properties ของ TR
+     *
+     * @return array คืนค่า $item กลับไป
+     */
+    public function onRow($item, $o, $prop)
+    {
+        $item['key'] = Form::text(array(
+            'name' => 'datas[key][]',
+            'labelClass' => 'g-input',
+            'value' => $item['key'],
+        ))->render();
+        foreach (Language::installedLanguage() as $key) {
+            $item[$key] = Form::textarea(array(
+                'name' => 'datas['.$key.'][]',
+                'labelClass' => 'g-input',
+                'value' => isset($item[$key]) ? $item[$key] : '',
+            ))->render();
+        }
+
+        return $item;
+    }
+
+    /**
      * module=languageedit.
      *
      * @return string
@@ -44,7 +71,7 @@ class View extends \Gcms\View
         ));
         // fieldset
         $fieldset = $form->add('fieldset', array(
-            'title' => '{LNG_' . ($language->id > 0 ? 'Edit' : 'Create') . '} ' . htmlspecialchars($language->key),
+            'title' => '{LNG_'.($language->id > 0 ? 'Edit' : 'Create').'} '.htmlspecialchars($language->key),
         ));
         // js
         $fieldset->add('select', array(
@@ -120,32 +147,5 @@ class View extends \Gcms\View
         ));
 
         return $form->render();
-    }
-
-    /**
-     * จัดรูปแบบการแสดงผลในแต่ละแถว.
-     *
-     * @param array  $item ข้อมูลแถว
-     * @param int    $o    ID ของข้อมูล
-     * @param object $prop กำหนด properties ของ TR
-     *
-     * @return array คืนค่า $item กลับไป
-     */
-    public function onRow($item, $o, $prop)
-    {
-        $item['key'] = Form::text(array(
-            'name' => 'datas[key][]',
-            'labelClass' => 'g-input',
-            'value' => $item['key'],
-        ))->render();
-        foreach (Language::installedLanguage() as $key) {
-            $item[$key] = Form::textarea(array(
-                'name' => 'datas[' . $key . '][]',
-                'labelClass' => 'g-input',
-                'value' => isset($item[$key]) ? $item[$key] : '',
-            ))->render();
-        }
-
-        return $item;
     }
 }
