@@ -30,33 +30,6 @@ class View extends \Gcms\View
     private $languages;
 
     /**
-     * จัดรูปแบบการแสดงผลในแต่ละแถว.
-     *
-     * @param array  $item ข้อมูลแถว
-     * @param int    $o    ID ของข้อมูล
-     * @param object $prop กำหนด properties ของ TR
-     *
-     * @return array คืนค่า $item กลับไป
-     */
-    public function onRow($item, $o, $prop)
-    {
-        foreach ($this->languages as $lng) {
-            if ($item['type'] == 'array') {
-                if (!empty($item[$lng])) {
-                    $data = @unserialize($item[$lng]);
-                    if (is_array($data)) {
-                        $item[$lng] = implode(', ', $data);
-                    }
-                }
-            }
-            $item[$lng] = empty($item[$lng]) ? '' : '<span title="'.htmlspecialchars($item[$lng]).'">'.self::toText($item[$lng]).'</span>';
-        }
-        $item['key'] = '<a class="icon-copy" title="'.htmlspecialchars($item['key']).'">'.self::toText($item['key']).'</a>';
-
-        return $item;
-    }
-
-    /**
      * ตารางภาษา.
      *
      * @param Request $request
@@ -162,6 +135,33 @@ class View extends \Gcms\View
         // คืนค่า HTML
 
         return $table->render();
+    }
+
+    /**
+     * จัดรูปแบบการแสดงผลในแต่ละแถว.
+     *
+     * @param array  $item ข้อมูลแถว
+     * @param int    $o    ID ของข้อมูล
+     * @param object $prop กำหนด properties ของ TR
+     *
+     * @return array คืนค่า $item กลับไป
+     */
+    public function onRow($item, $o, $prop)
+    {
+        foreach ($this->languages as $lng) {
+            if ($item['type'] == 'array') {
+                if (!empty($item[$lng])) {
+                    $data = @unserialize($item[$lng]);
+                    if (is_array($data)) {
+                        $item[$lng] = implode(', ', $data);
+                    }
+                }
+            }
+            $item[$lng] = empty($item[$lng]) ? '' : '<span title="'.htmlspecialchars($item[$lng]).'">'.self::toText($item[$lng]).'</span>';
+        }
+        $item['key'] = '<a class="icon-copy" title="'.htmlspecialchars($item['key']).'">'.self::toText($item['key']).'</a>';
+
+        return $item;
     }
 
     /**

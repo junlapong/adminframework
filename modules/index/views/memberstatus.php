@@ -22,35 +22,6 @@ use Kotchasan\Html;
 class View extends \Gcms\View
 {
     /**
-     * ฟังก์ชั่นสร้างแถวของรายการหมวดหมู่.
-     *
-     * @param array $item
-     *
-     * @return string
-     */
-    public static function createRow($id, $item, $color)
-    {
-        $row = '<li class="row" id="list_'.$id.'">';
-        if ($id > 1) {
-            $row .= '<div><span id="list_delete_'.$id.'" class="icon-delete" title="{LNG_Delete}"></span></div>';
-        } else {
-            $row .= '<div>&nbsp;</div>';
-        }
-        $row .= '<div><span id="list_color_'.$id.'" class="icon-color" title="'.$color.'"></span></div>';
-        $row .= '<div><span id="list_name_'.$id.'" title="{LNG_click to edit}" class="editinplace">'.$item.'</span></div>';
-        if ($id == 1) {
-            $row .= '<div class="right comment">{LNG_Administrator status It is of utmost importance to do everything}</div>';
-        } elseif ($id == 0) {
-            $row .= '<div class="right comment">{LNG_Status for general members}</div>';
-        } else {
-            $row .= '<div>&nbsp;</div>';
-        }
-        $row .= '</li>';
-
-        return $row;
-    }
-
-    /**
      * รายการสถานะสมาชิก
      *
      * @return string
@@ -87,5 +58,34 @@ class View extends \Gcms\View
         $form->script('initEditInplace("list", "index/model/memberstatus/action", "list_add_0");');
 
         return $form->render();
+    }
+
+    /**
+     * ฟังก์ชั่นสร้างแถวของรายการหมวดหมู่.
+     *
+     * @param array $item
+     *
+     * @return string
+     */
+    public static function createRow($id, $item, $color)
+    {
+        $row = '<li class="row" id="list_'.$id.'">';
+        if ($id > 1) {
+            $row .= '<div><span id="list_delete_'.$id.'" class="icon-delete" title="{LNG_Delete}"></span></div>';
+        } else {
+            $row .= '<div>&nbsp;</div>';
+        }
+        $row .= '<div><span id="list_color_'.$id.'" class="icon-color" title="'.$color.'"></span></div>';
+        $row .= '<div><span id="list_name_'.$id.'" title="{LNG_click to edit}" class="editinplace">'.$item.'</span></div>';
+        if ($id == 1) {
+            $row .= '<div class="right comment">{LNG_Administrator status It is of utmost importance to do everything}</div>';
+        } elseif ($id == 0) {
+            $row .= '<div class="right comment">{LNG_Status for general members}</div>';
+        } else {
+            $row .= '<div>&nbsp;</div>';
+        }
+        $row .= '</li>';
+
+        return $row;
     }
 }

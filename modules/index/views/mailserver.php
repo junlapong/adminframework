@@ -31,7 +31,6 @@ class View extends \Gcms\View
      */
     public function render($config)
     {
-        // form
         $form = Html::create('form', array(
             'id' => 'setup_frm',
             'class' => 'setup_frm',

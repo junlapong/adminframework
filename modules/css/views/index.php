@@ -20,14 +20,6 @@ namespace Css\Index;
 class View extends \Kotchasan\KBase
 {
     /**
-     * @param $css
-     */
-    public static function compress($css)
-    {
-        return preg_replace(array('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '/[\s]{0,}([:;,>\{\}])[\s]{0,}/', '/[\r\n\t]/s', '/[\s]{2,}/s', '/;}/'), array('', '\\1', '', ' ', '}'), $css);
-    }
-
-    /**
      * สร้างไฟล์ CSS.
      */
     public function index()
@@ -68,5 +60,13 @@ class View extends \Kotchasan\KBase
         ))
             ->withContent($data)
             ->send();
+    }
+
+    /**
+     * @param $css
+     */
+    public static function compress($css)
+    {
+        return preg_replace(array('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '/[\s]{0,}([:;,>\{\}])[\s]{0,}/', '/[\r\n\t]/s', '/[\s]{2,}/s', '/;}/'), array('', '\\1', '', ' ', '}'), $css);
     }
 }

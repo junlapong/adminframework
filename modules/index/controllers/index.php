@@ -39,7 +39,7 @@ class Controller extends \Gcms\Controller
         $request->initSession();
         // ตรวจสอบการ login
         Login::create();
-        // template ที่กำลังใช้งานอยู่
+        // กำหนด skin ให้กับ template
         Template::init(self::$cfg->skin);
         // View
         self::$view = new \Gcms\View();

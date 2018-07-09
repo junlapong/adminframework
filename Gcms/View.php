@@ -23,11 +23,12 @@ class View extends \Kotchasan\View
 {
     /**
      * ฟังก์ชั่น แทนที่ query string ด้วยข้อมูลจาก GET และ POST สำหรับส่งต่อไปยัง URL ถัดไป
-     * โดยการรับค่าจาก preg_replace.
+     * โดยการรับค่าจาก preg_replace
+     * คืนค่า URL.
      *
      * @param array $f รับค่าจากตัวแปรที่ส่งมาจาก preg_replace มาสร้าง query string
      *
-     * @return string คืนค่า URL
+     * @return string
      */
     public static function back($f)
     {

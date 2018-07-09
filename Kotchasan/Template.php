@@ -140,9 +140,10 @@ class Template
     }
 
     /**
-     * ฟังก์ชั่นตรวจสอบว่ามีการ add ข้อมูลมาหรือเปล่า.
+     * ฟังก์ชั่นตรวจสอบว่ามีการ add ข้อมูลมาหรือเปล่า
+     * คืนค่า true ถ้ามีการเรียกใช้คำสั่ง add มาก่อนหน้า, หรือ false ถ้าไม่ใช่.
      *
-     * @return bool คืนค่า true ถ้ามีการเรียกใช้คำสั่ง add มาก่อนหน้า, หรือ false ถ้าไม่ใช่
+     * @return bool
      */
     public function hasItem()
     {
@@ -242,7 +243,7 @@ class Template
     }
 
     /**
-     * คืนค่า HTML.
+     * คืนค่า HTML ถ้าไม่พบ template คืนค่าว่าง.
      *
      * @return string
      */

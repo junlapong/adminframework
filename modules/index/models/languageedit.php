@@ -24,20 +24,6 @@ use Kotchasan\Language;
 class Model extends \Kotchasan\Model
 {
     /**
-     * ยอมรับ tag บางตัว ในภาษา a em b strong ul ol li dd dt dl.
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    public function allowTags($string)
-    {
-        return preg_replace_callback('/(&lt;(\/?(a|em|b|strong|ul|ol|li|dd|dt|dl|small)).*?&gt;)/is', function ($matches) {
-            return html_entity_decode($matches[1]);
-        }, $string);
-    }
-
-    /**
      * อ่านรายการ owner จากฐานข้อมูลภาษา.
      *
      * @return array
@@ -55,6 +41,20 @@ class Model extends \Kotchasan\Model
         }
 
         return $result;
+    }
+
+    /**
+     * ยอมรับ tag บางตัว ในภาษา a em b strong ul ol li dd dt dl.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public function allowTags($string)
+    {
+        return preg_replace_callback('/(&lt;(\/?(a|em|b|strong|ul|ol|li|dd|dt|dl|small)).*?&gt;)/is', function ($matches) {
+            return html_entity_decode($matches[1]);
+        }, $string);
     }
 
     /**

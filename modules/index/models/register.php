@@ -24,44 +24,6 @@ use Kotchasan\Language;
 class Model extends \Kotchasan\Model
 {
     /**
-     * ลงทะเบียนสมาชิกใหม่.
-     *
-     * @param Model $model
-     * @param array $save       ข้อมูลสมาชิก
-     * @param array $permission
-     *
-     * @return array คืนค่าแอเรย์ของข้อมูลสมาชิกใหม่
-     */
-    public static function execute($model, $save, $permission = null)
-    {
-        // permission ถ้าเป็น null สามารถทำได้ทั้งหมด
-        if ($permission === null) {
-            $permission = array_keys(\Gcms\Controller::getPermissions());
-        }
-        if (!isset($save['username'])) {
-            $save['username'] = '';
-        }
-        if (!isset($save['password'])) {
-            $save['password'] = '';
-        } else {
-            $save['salt'] = uniqid();
-            $save['password'] = sha1($save['password'].$save['salt']);
-        }
-        $save['permission'] = empty($permission) ? '' : ','.implode(',', $permission).',';
-        $save['active'] = 1;
-        $save['create_date'] = date('Y-m-d H:i:s');
-        // บันทึกลงฐานข้อมูล
-        $save['id'] = $model->db()->insert($model->getTableName('user'), $save);
-        // คืนค่าแอเรย์ของข้อมูลสมาชิกใหม่
-        $save['permission'] = array();
-        foreach ($permission as $key => $value) {
-            $save['permission'][] = $value;
-        }
-
-        return $save;
-    }
-
-    /**
      * บันทึกข้อมูล (register.php).
      *
      * @param Request $request
@@ -121,5 +83,43 @@ class Model extends \Kotchasan\Model
         }
         // คืนค่าเป็น JSON
         echo json_encode($ret);
+    }
+
+    /**
+     * ลงทะเบียนสมาชิกใหม่.
+     *
+     * @param Model $model
+     * @param array $save       ข้อมูลสมาชิก
+     * @param array $permission
+     *
+     * @return array คืนค่าแอเรย์ของข้อมูลสมาชิกใหม่
+     */
+    public static function execute($model, $save, $permission = null)
+    {
+        // permission ถ้าเป็น null สามารถทำได้ทั้งหมด
+        if ($permission === null) {
+            $permission = array_keys(\Gcms\Controller::getPermissions());
+        }
+        if (!isset($save['username'])) {
+            $save['username'] = '';
+        }
+        if (!isset($save['password'])) {
+            $save['password'] = '';
+        } else {
+            $save['salt'] = uniqid();
+            $save['password'] = sha1($save['password'].$save['salt']);
+        }
+        $save['permission'] = empty($permission) ? '' : ','.implode(',', $permission).',';
+        $save['active'] = 1;
+        $save['create_date'] = date('Y-m-d H:i:s');
+        // บันทึกลงฐานข้อมูล
+        $save['id'] = $model->db()->insert($model->getTableName('user'), $save);
+        // คืนค่าแอเรย์ของข้อมูลสมาชิกใหม่
+        $save['permission'] = array();
+        foreach ($permission as $key => $value) {
+            $save['permission'][] = $value;
+        }
+
+        return $save;
     }
 }

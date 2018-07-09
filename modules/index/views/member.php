@@ -24,32 +24,6 @@ use Kotchasan\Http\Request;
 class View extends \Gcms\View
 {
     /**
-     * จัดรูปแบบการแสดงผลในแต่ละแถว.
-     *
-     * @param array  $item ข้อมูลแถว
-     * @param int    $o    ID ของข้อมูล
-     * @param object $prop กำหนด properties ของ TR
-     *
-     * @return array คืนค่า $item กลับไป
-     */
-    public function onRow($item, $o, $prop)
-    {
-        $item['create_date'] = Date::format($item['create_date'], 'd M Y');
-        if ($item['active'] == 1) {
-            $item['active'] = '<span class="icon-valid access" title="{LNG_Can login}"></span>';
-            $item['lastvisited'] = empty($item['lastvisited']) ? '-' : Date::format($item['lastvisited'], 'd M Y H:i').' ('.number_format($item['visited']).')';
-        } else {
-            $item['active'] = '<span class="icon-valid disabled" title="{LNG_Unable to login}"></span>';
-            $item['lastvisited'] = '-';
-        }
-        $item['fb'] = $item['fb'] == 1 ? '<a href="//'.$item['website'].'" target=_blank class="icon-facebook notext"></a>' : '';
-        $item['status'] = isset(self::$cfg->member_status[$item['status']]) ? '<span class=status'.$item['status'].'>{LNG_'.self::$cfg->member_status[$item['status']].'}</span>' : '';
-        $item['phone'] = self::showPhone($item['phone']);
-
-        return $item;
-    }
-
-    /**
      * ตารางรายชื่อสมาชิก
      *
      * @param Request $request
@@ -176,5 +150,31 @@ class View extends \Gcms\View
         // คืนค่า HTML
 
         return $table->render();
+    }
+
+    /**
+     * จัดรูปแบบการแสดงผลในแต่ละแถว.
+     *
+     * @param array  $item ข้อมูลแถว
+     * @param int    $o    ID ของข้อมูล
+     * @param object $prop กำหนด properties ของ TR
+     *
+     * @return array คืนค่า $item กลับไป
+     */
+    public function onRow($item, $o, $prop)
+    {
+        $item['create_date'] = Date::format($item['create_date'], 'd M Y');
+        if ($item['active'] == 1) {
+            $item['active'] = '<span class="icon-valid access" title="{LNG_Can login}"></span>';
+            $item['lastvisited'] = empty($item['lastvisited']) ? '-' : Date::format($item['lastvisited'], 'd M Y H:i').' ('.number_format($item['visited']).')';
+        } else {
+            $item['active'] = '<span class="icon-valid disabled" title="{LNG_Unable to login}"></span>';
+            $item['lastvisited'] = '-';
+        }
+        $item['fb'] = $item['fb'] == 1 ? '<a href="//'.$item['website'].'" target=_blank class="icon-facebook notext"></a>' : '';
+        $item['status'] = isset(self::$cfg->member_status[$item['status']]) ? '<span class=status'.$item['status'].'>{LNG_'.self::$cfg->member_status[$item['status']].'}</span>' : '';
+        $item['phone'] = self::showPhone($item['phone']);
+
+        return $item;
     }
 }

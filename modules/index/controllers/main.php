@@ -23,37 +23,6 @@ use Kotchasan\Template;
 class Controller extends \Gcms\Controller
 {
     /**
-     * หน้าหลักเว็บไซต์.
-     *
-     * @param Request $request
-     *
-     * @return string
-     */
-    public function execute(Request $request)
-    {
-        // โมดูลจาก URL ถ้าไม่มีใช้เมนูรายการแรก
-        $className = self::parseModule($request, self::$menus->home());
-        if ($className) {
-            // create Class
-            $controller = new $className();
-            // tempalate
-            $template = Template::create('', '', 'main');
-            $template->add(array(
-                '/{CONTENT}/' => $controller->render($request),
-            ));
-            // ข้อความ title bar
-            $this->title = $controller->title();
-            // เมนูที่เลือก
-            $this->menu = $controller->menu();
-
-            return $template->render();
-        }
-        // ไม่พบหน้าที่เรียก
-
-        return \Index\Error\Controller::page404();
-    }
-
-    /**
      * ฟังก์ชั่นแปลงชื่อโมดูลที่ส่งมาเป็น Controller Class และโหลดคลาสไว้ เช่น
      * home = Index\Home\Controller
      * person-index = Person\Index\Controller.
@@ -106,5 +75,36 @@ class Controller extends \Gcms\Controller
         }
 
         return null;
+    }
+
+    /**
+     * หน้าหลักเว็บไซต์.
+     *
+     * @param Request $request
+     *
+     * @return string
+     */
+    public function execute(Request $request)
+    {
+        // โมดูลจาก URL ถ้าไม่มีใช้เมนูรายการแรก
+        $className = self::parseModule($request, self::$menus->home());
+        if ($className) {
+            // create Class
+            $controller = new $className();
+            // tempalate
+            $template = Template::create('', '', 'main');
+            $template->add(array(
+                '/{CONTENT}/' => $controller->render($request),
+            ));
+            // ข้อความ title bar
+            $this->title = $controller->title();
+            // เมนูที่เลือก
+            $this->menu = $controller->menu();
+
+            return $template->render();
+        }
+        // ไม่พบหน้าที่เรียก
+
+        return \Index\Error\Controller::page404();
     }
 }

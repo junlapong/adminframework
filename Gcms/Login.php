@@ -37,8 +37,6 @@ class Login extends \Kotchasan\Login implements \Kotchasan\LoginInterface
         if (is_string($login_result)) {
             return $login_result;
         } else {
-            // model
-            $model = new \Kotchasan\Model();
             // ip ที่ login
             $ip = self::$request->getClientIp();
             // current session
@@ -46,7 +44,7 @@ class Login extends \Kotchasan\Login implements \Kotchasan\LoginInterface
             // อัปเดทการเยี่ยมชม
             if ($session_id != $login_result['session_id']) {
                 ++$login_result['visited'];
-                $model->db()->createQuery()
+                \Kotchasan\Model::createQuery()
                     ->update('user')
                     ->set(array(
                         'session_id' => $session_id,
